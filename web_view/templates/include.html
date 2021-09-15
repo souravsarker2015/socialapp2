@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FaceClone</title>
+    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/style.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">FaceClone</a>
+        </div>
+        {% if request.user.is_anonymous == False %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Home</a></li>
+                <li><a href="/{{ request.user.username }}">Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
+<main class="container">
+    {% include html_file_path %}
+</main>
+<footer class="container text-center">
+    <ul class="nav nav-pills pull-right">
+        <li>FaceClone - Made by [your name here]</li>
+    </ul>
+</footer>
+<script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/public/js/script.js"></script>
+</body>
+</html>

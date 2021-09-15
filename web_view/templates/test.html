@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background: #ecf0f3;
+        }
+
+        .status-body {
+            width: 500px;
+            background: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .status-body-pp {
+            width: 35px;
+            border: none;
+            border-radius: 22px;
+            height: 35px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+{% for status in status_list %}
+    <div class="status-body">
+        <div id="status-{{ status.id }}">
+            <div style="display: inline-block">
+                <img class="status-body-pp" src="https://lh3.googleusercontent.com/ogw/ADea4I4kjScOGrHWshNhFd-kxczUfCbsxmESjCHnmeWMYA=s32-c-mo">
+            </div>
+            <a href="">{{ status.user.get_full_name }}</a>
+        </div>
+        <div>
+            <pre style="white-space: pre-wrap;">{{ status.text }}</pre>
+        </div>
+        <div>
+            <img style=" width: 100%;" src="https://scontent.fdac5-2.fna.fbcdn.net/v/t1.6435-9/241556443_174602951470449_6168180625171813710_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=825194&_nc_eui2=AeGNRgLhN2pg9jYcOCi0IRH9z8jeBUwip5LPyN4FTCKnkkxrXTmgBOYcjUcwOi0KiYEhNyy91XvX3_s553H0CDrv&_nc_ohc=EHizJHICF5oAX-uzcnE&_nc_ht=scontent.fdac5-2.fna&oh=1967d1757c54b3f4bb8a2670b3fc38d4&oe=61624F39">
+        </div>
+        <div>
+            <div>
+                <div style="display: inline-block">
+                    <b>&#128512;</b>
+                    <b>&#128512;</b>
+                    <b>&#128512;</b>
+                    <a>1.2K</a>
+                </div>
+                <div style="float: right">
+                    <a>4.2K Comments</a>
+                    <a>234 Shares</a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <hr>
+            <button onclick="likeStatus({{ status.id }})" id="status-but-like{{ status.id }}" style="width: 32%">Like</button>
+            <button onclick="commentStatus({{ status.id }})" id="status-but-comment{{ status.id }}" style="width: 32%">Comment</button>
+            <button onclick="shareStatus({{ status.id }})" id="status-but-share{{ status.id }}" style="width: 32%">Share</button>
+            <hr>
+        </div>
+    </div>
+{% endfor %}
+</body>
+<script>
+    function likeStatus(id) {
+        let path = "/api/status/like/" + id;
+        $.get(path, function (response, status) {
+            if (response.status) {
+                let obj = document.getElementById('status-but-like' + id);
+                obj.innerText = "Like " + response.data.total_like;
+                if (response.data.you_like) {
+                    document.getElementById('status-but-like' + id).style.background = "green"
+                } else {
+                    document.getElementById('status-but-like2' + id).style.background = "red"
+                }
+            } else {
+                alert(response.message)
+            }
+        });
+    }
+
+    function commentStatus(id) {
+        let obj = document.getElementById('status-but-comment' + id);
+        alert(obj.innerText);
+    }
+
+    function shareStatus(id) {
+        let obj = document.getElementById('status-but-share' + id);
+        alert(obj.innerText);
+    }
+</script>
+
+</html>
